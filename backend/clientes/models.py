@@ -4,4 +4,5 @@ from django.db import models
 class Cliente(models.Model):
     full_name = models.CharField(max_length=100)
     email = models.EmailField()
+    direccion = models.TextField()
     
