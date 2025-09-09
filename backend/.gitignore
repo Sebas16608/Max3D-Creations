@@ -1,0 +1,36 @@
+# Entorno virtual
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Archivos de configuración del editor
+.vscode/
+.idea/
+
+# Archivos del sistema
+.DS_Store
+
+# Archivos de base de datos (si usás SQLite)
+*.sqlite3
+
+# Archivos de migración de Django (si querés ignorarlos)
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Ignorar archivos subidos
+/media/
+
+
+# Archivos generados por logs o tests
+*.log
+*.pot
+*.mo
+coverage/
+htmlcov/
+
+# Archivos de vscode
+.vscodes
+
+# Archivo .env
+.env
