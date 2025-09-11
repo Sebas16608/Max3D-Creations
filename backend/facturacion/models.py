@@ -12,7 +12,7 @@ class Datos_Factura(models.Model):
     def opcion(self):
         if self.identificacion == "CUI":
             return "Numero de CUI"
-        elif self.identificacion == "Pasaporte":
+        elif self.identificacion == "PASAPORTE":
             return "Numero de Pasaporte"
         elif self.identificacion == "NIT":
             return "Numero de NIT"
