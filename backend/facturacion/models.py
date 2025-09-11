@@ -18,3 +18,10 @@ class Datos_Factura(models.Model):
             return "Numero de NIT"
         else:
             return "Por favor llenar el campo"
+    
+    class Meta:
+        verbose_name = "Dato de facturacion"
+        verbose_name_plural = "Datos de facturacion"
+
+    def __str__(self):
+        return f"{self.nombre} - {self.identificacion}"
