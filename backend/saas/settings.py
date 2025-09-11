@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'facturacion.apps.FacturacionConfig',
     'pedidos.apps.PedidosConfig',
     'produccion.apps.ProduccionConfig',
-    'pedidos'
+    'pedidos.apps.PedidosConfig'
 ]
 
 MIDDLEWARE = [
