@@ -68,3 +68,15 @@ class DatosView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, pk):
+        try:
+            datos = Datos_Entrega.objects.get(pk=pk)
+        except Datos_Entrega.DoesNotExist:
+            return Response({"error": "Los datos de la Entrega no se encuentran"}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = EntregaSerializers(datos, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
