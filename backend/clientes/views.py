@@ -32,7 +32,7 @@ class PersonalView(APIView):
         except Datos_Personales.DoesNotExist:
             return Response({"error": "Los datos del cliente no se encuentran"}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = PersonalSerializers(datos_personales)
+        serializer = PersonalSerializers(datos_personales, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
