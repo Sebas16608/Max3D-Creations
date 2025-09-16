@@ -13,7 +13,7 @@ class PersonalView(APIView):
                 serializer = PersonalSerializers(datos_personales)
                 return Response(serializer.data)
             except Datos_Personales.DoesNotExist:
-                return Response({"error", "Los datos del cliente no existen"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error", "Los datos del cliente no se encuentran"}, status=status.HTTP_404_NOT_FOUND)
         else:
             datos_personales = Datos_Personales.objects.all()
             serializer = PersonalSerializers(datos_personales)
@@ -23,7 +23,17 @@ class PersonalView(APIView):
         serializer = PersonalSerializers(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    
+    def put(self, request, pk):
+        try:
+            datos_personales = Datos_Personales.objects.get(pk=pk)
+        except Datos_Personales.DoesNotExist:
+            return Response({"error": "Los datos del cliente no se encuentran"}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = PersonalSerializers(datos_personales)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
