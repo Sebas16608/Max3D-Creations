@@ -7,3 +7,11 @@ class Pedido(models.Model):
     productos = models.ManyToManyField(Productos, through="PedidoProductos")
     cantidad = models.IntegerField()
     fecha = models.DateField(auto_now_add=True)
+
+class PedidoProductos(models.Model):
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Productos, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        db_table = "pedido_productos"  # opcional, para que no se llame pedidos_pedidoproductos
