@@ -11,13 +11,13 @@ class PersonalView(APIView):
             try:
                 datos_personales = Datos_Personales.objects.get(pk=pk)
                 serializer = PersonalSerializers(datos_personales)
-                return Response(serializer.data)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             except Datos_Personales.DoesNotExist:
                 return Response({"error", "Los datos del cliente no se encuentran"}, status=status.HTTP_404_NOT_FOUND)
         else:
             datos_personales = Datos_Personales.objects.all()
-            serializer = PersonalSerializers(datos_personales)
-            return Response(serializer.data)
+            serializer = PersonalSerializers(datos_personales, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         
     def post(self, request):
         serializer = PersonalSerializers(data=request.data)
@@ -46,3 +46,18 @@ class PersonalView(APIView):
         
         datos_personales.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class DatosView(APIView):
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                datos = Datos_Entrega.objects.get(pk=pk)
+                serializer = EntregaSerializers(datos)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except Datos_Entrega.DoesNotExist:
+                return Response({"error": "Los datos de la entrerga no se encuentran"}, status=status.HTTP_404_NOT_FOUND)
+            
+        else:
+            datos = Datos_Entrega.objects.all()
+            serializer = EntregaSerializers(datos, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
