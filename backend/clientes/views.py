@@ -61,3 +61,10 @@ class DatosView(APIView):
             datos = Datos_Entrega.objects.all()
             serializer = EntregaSerializers(datos, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+        
+    def post(self, request):
+        serializer = EntregaSerializers(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_204_NO_CONTENT)
