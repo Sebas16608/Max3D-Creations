@@ -47,7 +47,7 @@ class PersonalView(APIView):
         datos_personales.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-class DatosView(APIView):
+class EntregaView(APIView):
     def get(self, request, pk=None):
         if pk:
             try:
