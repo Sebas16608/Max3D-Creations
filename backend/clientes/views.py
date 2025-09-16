@@ -37,3 +37,12 @@ class PersonalView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        try:
+            datos_personales = Datos_Personales.objects.get(pk=pk)
+        except Datos_Personales.DoesNotExist:
+            return Response({"error": "Los datos del cliente no se encuntran"}, status=status.HTTP_404_NOT_FOUND)
+        
+        datos_personales.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
