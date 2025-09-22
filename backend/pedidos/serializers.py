@@ -5,6 +5,6 @@ class PedidoSerializer(serializers.ModelSerializer):
     model = Pedido
     fields = "__all__"
 
-class PedidoProducto(serializers.ModelSerializer):
+class PedidoProductoSerializer(serializers.ModelSerializer):
     model = PedidoProductos
     fields = "__all__"
