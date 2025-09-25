@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'pedidos.apps.PedidosConfig',
     'produccion.apps.ProduccionConfig',
     'producto.apps.ProductoConfig',
-    'carrito.apps.CarritoConfig'
+    'carrito.apps.CarritoConfig',
+    'user.apps.UserConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +58,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'saas.urls'
+
+AUTH_USER_MODEL = 'user.User'
 
 TEMPLATES = [
     {
