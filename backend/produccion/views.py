@@ -45,3 +45,20 @@ class ProduccionView(APIView):
         
         producciones.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+"""
+Produccion Producto
+"""
+
+class ProduccionProductoView(APIView):
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                produccion_productos = ProduccionProducto.objects.get(pk=pk)
+                serializer = ProduccionProductoSerializer(produccion_productos)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except ProduccionProducto.DoesNotExist:
+                return Response({"error": "La produccion del producto no fue encontrada"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            produccion_productos = ProduccionProducto.objects.all()
+            serializer = ProduccionProducto(produccion_productos, many=True)
