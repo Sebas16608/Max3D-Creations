@@ -69,3 +69,25 @@ class ProduccionProductoView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        try:
+            produccion_producto = ProduccionProducto.objects.get(pk=pk)
+        except ProduccionProducto.DoesNotExist:
+            return Response({"error": "La produccion del producto no fue encontrada"}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = ProduccionProductoSerializer(produccion_producto, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        try:
+            produccion_producto = ProduccionProducto.objects.get(pk=pk)
+        except ProduccionProducto.DoesNotExist:
+            return Response({"error": "La produccion del producto no fue encontrada"}, status=status.HTTP_404_NOT_FOUND)
+        
+        produccion_producto.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
