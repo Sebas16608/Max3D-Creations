@@ -62,3 +62,10 @@ class ProduccionProductoView(APIView):
         else:
             produccion_productos = ProduccionProducto.objects.all()
             serializer = ProduccionProducto(produccion_productos, many=True)
+
+    def post(self, request):
+        serializer = ProduccionProductoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
