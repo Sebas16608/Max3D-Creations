@@ -75,6 +75,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'saas.wsgi.application'
 
+AUTH_USER = 'user.User'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
