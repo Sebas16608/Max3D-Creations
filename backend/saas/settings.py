@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3wh0sfhaia-$y$ixd=o#kkotc%n#r5vl_%)bkpbx(hm)kj#i@6'
+SECRET_KEY = 'django-insecure-_erxbb+@i9btvfw7w)q4h)(q##@u=i&i9fq3u%3f(y7d!)j^o7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,14 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'clientes.apps.ClientesConfig',
-    'facturacion.apps.FacturacionConfig',
-    'pedidos.apps.PedidosConfig',
-    'produccion.apps.ProduccionConfig',
-    'producto.apps.ProductoConfig',
-    'carrito.apps.CarritoConfig',
-    'user.apps.UserConfig',
-    'rest_framework',
+    'carrito',
+    'clientes',
+    'facturacion',
+    'pedidos',
+    'produccion',
+    'producto',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -58,8 +57,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'saas.urls'
-
-AUTH_USER_MODEL = 'user.User'
 
 TEMPLATES = [
     {
