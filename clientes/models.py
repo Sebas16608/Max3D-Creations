@@ -34,6 +34,7 @@ class DatosFactura(models.Model):
     def identificador(self):
         #if self.identificacion == "NIT":
          #   return "Número de NIT"
+        # hay que cambiar esto por un elif
         if self.identificacion == "CUI":
             return "Número de CUI/DPI"
         elif self.identificacion == "PASAPORTE":
