@@ -29,3 +29,12 @@ class PersonalView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        try:
+            personal = DatosPersonales.objects.get(pk=pk)
+        except DatosPersonales.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = PersonalSerializer(personal, data=request.data)
+        return Response(serializer.data)
