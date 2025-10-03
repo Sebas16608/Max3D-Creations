@@ -7,7 +7,7 @@ from .models import DatosPersonales, DatosEntrega, DatosFactura
 
 # Funcion para cuando no existan los datos
 def notexist():
-    return "Los datos no fueron encontrados"
+    return {"error": "Los datos no fueron encontrado"}
 
 class PersonalView(APIView):
     def get(self, request, pk=None):
@@ -22,3 +22,10 @@ class PersonalView(APIView):
             personal = DatosPersonales.objects.all()
             serializer = PersonalSerializer(personal, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        serializer = PersonalSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
