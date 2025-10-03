@@ -38,3 +38,12 @@ class PersonalView(APIView):
         
         serializer = PersonalSerializer(personal, data=request.data)
         return Response(serializer.data)
+    
+    def delte(self, request, pk):
+        try:
+            personal = DatosPersonales.objects.get(pk=pk)
+        except DatosPersonales.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        personal.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
