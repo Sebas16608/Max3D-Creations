@@ -47,3 +47,20 @@ class PersonalView(APIView):
         
         personal.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class EntregaView(APIView):
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                entrega = DatosEntrega.objects.get(pk=pk)
+                serializer = EntregaSerializer(entrega)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except DatosEntrega.DoesNotExist:
+                return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        else:
+            entrega = DatosEntrega.objects.all()
+            serializer = EntregaSerializer(entrega, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        
+        
