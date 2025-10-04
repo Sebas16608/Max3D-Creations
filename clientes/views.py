@@ -89,3 +89,18 @@ class EntregaView(APIView):
         
         entrega.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class FacturaView(APIView):
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                factura = DatosFactura.objects.get(pk=pk)
+                serializer = FacturaSerializer(factura)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except DatosFactura.DoesNotExist:
+                return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        else:
+            factura = DatosFactura.objects.all()
+            serializer = FacturaSerializer(factura, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+         
