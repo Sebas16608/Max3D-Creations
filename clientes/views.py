@@ -80,3 +80,12 @@ class EntregaView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        try:
+            entrega = DatosEntrega.objects.get(pk=pk)
+        except DatosEntrega.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        entrega.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
