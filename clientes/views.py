@@ -103,4 +103,23 @@ class FacturaView(APIView):
             factura = DatosFactura.objects.all()
             serializer = FacturaSerializer(factura, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-         
+        
+    def post(self, request):
+        serializer = FacturaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        try:
+            factura = DatosFactura.objects.get(pk=pk)
+        except DatosFactura.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = FacturaSerializer(factura, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
