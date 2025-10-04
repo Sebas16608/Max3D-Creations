@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'pedidos',
     'produccion',
     'producto',
-    'user'
+    'user',
+    'rest_framework',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
