@@ -1,3 +1,134 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import PersonalSerializer, EntregaSerializer, FacturaSerializer
+from .models import DatosPersonales, DatosEntrega, DatosFactura
 
-# Create your views here.
+
+# Funcion para cuando no existan los datos
+def notexist():
+    return {"error": "Los datos no fueron encontrado"}
+
+class PersonalView(APIView):
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                personal = DatosPersonales.objects.get(pk=pk)
+                serializer = PersonalSerializer(personal)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except DatosPersonales.DoesNotExist:
+                return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        else:
+            personal = DatosPersonales.objects.all()
+            serializer = PersonalSerializer(personal, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        serializer = PersonalSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        try:
+            personal = DatosPersonales.objects.get(pk=pk)
+        except DatosPersonales.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = PersonalSerializer(personal, data=request.data)
+        return Response(serializer.data)
+    
+    def delte(self, request, pk):
+        try:
+            personal = DatosPersonales.objects.get(pk=pk)
+        except DatosPersonales.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        personal.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class EntregaView(APIView):
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                entrega = DatosEntrega.objects.get(pk=pk)
+                serializer = EntregaSerializer(entrega)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except DatosEntrega.DoesNotExist:
+                return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        else:
+            entrega = DatosEntrega.objects.all()
+            serializer = EntregaSerializer(entrega, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+    def post(self, request):
+        serializer = EntregaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        try:
+            entrega = DatosEntrega.objects.get(pk=pk)
+        except DatosEntrega.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = EntregaSerializer(entrega, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        try:
+            entrega = DatosEntrega.objects.get(pk=pk)
+        except DatosEntrega.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        entrega.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class FacturaView(APIView):
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                factura = DatosFactura.objects.get(pk=pk)
+                serializer = FacturaSerializer(factura)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except DatosFactura.DoesNotExist:
+                return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        else:
+            factura = DatosFactura.objects.all()
+            serializer = FacturaSerializer(factura, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+    def post(self, request):
+        serializer = FacturaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        try:
+            factura = DatosFactura.objects.get(pk=pk)
+        except DatosFactura.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = FacturaSerializer(factura, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        try:
+            factura = DatosFactura.objects.get(pk=pk)
+        except DatosFactura.DoesNotExist:
+            return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        
+        factura.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
