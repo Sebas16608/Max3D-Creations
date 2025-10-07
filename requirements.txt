@@ -1,5 +1,6 @@
 asgiref==3.9.1
 Django==5.2.6
+django-cleanup==9.0.0
 django-cors-headers==4.7.0
 djangorestframework==3.16.1
 pillow==11.3.0
