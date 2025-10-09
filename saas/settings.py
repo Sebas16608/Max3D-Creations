@@ -28,6 +28,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# User
+AUTH_USER = 'user.User'
+
 # Application definition
 
 INSTALLED_APPS = [
