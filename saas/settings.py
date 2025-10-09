@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # User
-AUTH_USER = 'user.User'
+AUTH_USER_MODEL = 'user.User'
 
 # Application definition
 
