@@ -1,8 +1,8 @@
 from django.db import models
-from pedidos.models import Pedido
+# from pedidos.models import Pedido
 # Create your models here.
 class Carrito(models.Model):
-    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name="carrito")
+    #pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name="carrito")
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now_add=True)
     ESTADOS = [
