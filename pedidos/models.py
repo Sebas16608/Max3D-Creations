@@ -20,13 +20,3 @@ class Pedido(models.Model):
 
     def __str__(self):
         return f"Pedido #{self.id} del carrito #{self.carrito.id}"
-class ImagenPedido(models.Model):
-    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='imagenes')
-    imagen = models.ImageField(upload_to='pedidos/')
-
-    class Meta:
-        verbose_name = "Imagene"
-        verbose_name_plural = "Imagenes"
-
-    def __str__(self):
-        return f"imagenes del pedido {self.pedido.pk}"
