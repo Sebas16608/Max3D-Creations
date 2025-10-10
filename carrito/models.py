@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import User
-# from producto.models import Producto
+from producto.models import Producto
 # Create your models here.
 class Carrito(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="carrito")
@@ -25,11 +25,11 @@ class Carrito(models.Model):
 # Para manejar los items que vaya a contener el carrito
 class CarritoItem(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name="items")
-    # producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default=1)
-    """
+    
     def subtotal(self):
         return self.producto.precio * self.cantidad
         
     def __str__(self):
-        return f"{self.cantidad} x {self.producto.nombre}"""
+        return f"{self.cantidad} x {self.producto.nombre}"
