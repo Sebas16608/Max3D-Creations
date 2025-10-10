@@ -1,8 +1,9 @@
 from django.db import models
-# from pedidos.models import Pedido
+from user.models import User
+# from producto.models import Producto
 # Create your models here.
 class Carrito(models.Model):
-    #pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name="carrito")
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="carrito")
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now_add=True)
     ESTADOS = [
@@ -20,3 +21,15 @@ class Carrito(models.Model):
     class Meta:
         verbose_name = "Carrito"
         verbose_name_plural = "Carritos"
+
+# Para manejar los items que vaya a contener el carrito
+class CarritoItem(models.Model):
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name="items")
+    # producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+    """
+    def subtotal(self):
+        return self.producto.precio * self.cantidad
+        
+    def __str__(self):
+        return f"{self.cantidad} x {self.producto.nombre}"""
