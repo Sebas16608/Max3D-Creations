@@ -1,5 +1,5 @@
-from .models import Carrito
-from .serializers import CarritoSerializer
+from .models import Carrito, CarritoItem
+from .serializers import CarritoSerializer, CarritoItemSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -51,6 +51,16 @@ class CarritoView(APIView):
         carritos.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
         
-
-
-            
+class CarritoItemView(APIView):
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                item = CarritoItem.objects.get(pk=pk)
+                serializer = CarritoSerializer(item)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except CarritoItem.DoesNotExist:
+                return Response(notexist(), status=status.HTTP_404_NOT_FOUND)
+        else:
+            item = CarritoItem.objects.all()
+            serializer = CarritoItemSerializer(item, data=request.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
