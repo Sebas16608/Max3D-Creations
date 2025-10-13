@@ -3,7 +3,7 @@ from user.models import User
 from producto.models import Producto
 # Create your models here.
 class Carrito(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="carrito")
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="carrito", default=1)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now_add=True)
     ESTADOS = [
