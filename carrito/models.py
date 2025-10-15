@@ -1,28 +1,29 @@
 from django.db import models
 from user.models import User
 from producto.models import Producto
-# Create your models here.
+
 class Carrito(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="carrito", default=1)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="carritos", default=1)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_actualizacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+    
     ESTADOS = [
         ("ACTIVO", "Activo"),
         ("FINALIZADO", "Finalizado")
     ]
-    estado = models.CharField(max_length=25, choices=ESTADOS)
+    estado = models.CharField(max_length=25, choices=ESTADOS, default="ACTIVO")
 
     def total(self):
-        return sum(p.precio for p in self.pedido.all() if hasattr(p, "precio"))
-    
+        return sum(item.subtotal() for item in self.items.all())
+
     def __str__(self):
-        return f"Carrito #{self.id} de {self.cliente}"
+        return f"Carrito #{self.id} de {self.usuario}"
     
     class Meta:
         verbose_name = "Carrito"
         verbose_name_plural = "Carritos"
 
-# Para manejar los items que vaya a contener el carrito
+
 class CarritoItem(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name="items")
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
@@ -33,3 +34,6 @@ class CarritoItem(models.Model):
         
     def __str__(self):
         return f"{self.cantidad} x {self.producto.nombre}"
+    
+    class Meta:
+        unique_together = ('carrito', 'producto')
