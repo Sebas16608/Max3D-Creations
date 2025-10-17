@@ -18,3 +18,7 @@ class Pedido(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Pedido.DoesNotExist:
                 return Response(notexits(), status=status.HTTP_404_NOT_FOUND)
+        else:
+            pedido = Pedido.objects.all()
+            serializer = PedidoSerializer(pedido, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
