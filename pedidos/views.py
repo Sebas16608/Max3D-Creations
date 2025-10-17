@@ -9,7 +9,7 @@ from .serializers import PedidoSerializer
 def notexits():
     return {"error": "Los Datos no Fueron encontrados"}
 
-class Pedido(APIView):
+class PedidoView(APIView):
     def get(self, request, pk=None):
         if pk:
             try:
